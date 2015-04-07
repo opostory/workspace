@@ -1,0 +1,8 @@
+package com.kb.csql;
+
+public class ConnectSql {
+	public void connect(){
+		String driver = "com.mysql.jdbc.Driver";
+		String url = "jdbc:mysql://";
+	}
+}

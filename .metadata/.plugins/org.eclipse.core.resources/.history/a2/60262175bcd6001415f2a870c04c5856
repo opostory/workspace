@@ -1,0 +1,4 @@
+#日志文件地址，多个地址用','号分割开
+logdir=c:/IFRToolLog.txt,
+mysqluser = root
+mysqlpwd = 

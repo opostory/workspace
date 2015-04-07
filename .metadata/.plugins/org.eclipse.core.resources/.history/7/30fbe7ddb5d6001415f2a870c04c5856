@@ -1,0 +1,25 @@
+package com.kb.config;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class ExplainConf {
+	public static Map<String, String> explain(String conf){
+		if(conf.length() <= 0){System.out.println("配置文件加载失败");System.exit(0);}
+		String[] line = conf.split("\n");
+		System.out.println(line.length);
+		Map<String, String> map = new HashMap<String, String>();
+		for(String i : line){
+			if(i.substring(0, 1) != "#"){
+				i = i.trim(); 
+				String[] va = i.split("=");
+				if(va.length == 1){
+					map.put(va[0].trim(), "");
+				}else{
+					map.put(va[0].trim(), va[1].trim());
+				}
+			}
+		}
+		return map;
+	}
+}

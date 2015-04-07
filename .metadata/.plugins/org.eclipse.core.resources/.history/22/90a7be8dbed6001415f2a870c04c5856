@@ -1,0 +1,6 @@
+#日志文件地址，多个地址用','号分割开
+#日志文件地址数量必须与规则对应
+logdir=c:/IFRToolLog.txt,C:/Apps/okay/hsl.ppk,
+rule=json,json
+mysqluser = root
+mysqlpwd = 

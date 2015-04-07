@@ -1,0 +1,45 @@
+package com.kb.logs;
+
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+
+import net.sf.json.JSONObject;
+
+import com.kb.config.StaticConf;
+import com.kb.errors.Errors;
+
+public class ExplainLog {
+	
+	public String[] logs;
+	public String[] rule;
+	public String[] table;
+	
+	public ExplainLog(String[] logs, String[] rule, String[] table){
+		this.logs = logs;
+		this.rule = rule;
+		this.table = table;
+	}
+	public void readLog(){
+		for(String i : logs){
+			if(i.length() <= 0){Errors.exit("日志路径错误！");}
+		}
+	}
+	public void readLog(String log){
+		String[] logs = log.split(StaticConf.conf.get("symbolline"));
+		
+		for(String i : logs){
+			Map<String, String> map = null;
+			map = parseJson(i);
+		}
+	}
+	private Map<String, String> parseJson(String json){
+		JSONObject jo = JSONObject.fromObject(json);
+		Map<String, String> map = new HashMap<String, String>();
+		for(Iterator iter = jo.keys();iter.hasNext();){
+			String key = (String)iter.next();
+			map.put(key, jo.getString(key));
+		}
+		return map;
+	}
+}

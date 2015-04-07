@@ -1,0 +1,12 @@
+import java.io.IOException;
+
+import com.kb.read.ReadFile;
+
+
+public class Anylasis {
+	public static void main(String[] args) throws IOException{
+		ReadFile rf = new ReadFile();
+		rf.readFile("C:/Apps/okay/mail.txt");
+		rf.readFile("C:/IFRToolLog.txt");
+	}
+}

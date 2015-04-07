@@ -1,0 +1,7 @@
+package com.kb.errors;
+
+public class Errors {
+	public static void exit(String msg){
+		
+	}
+}

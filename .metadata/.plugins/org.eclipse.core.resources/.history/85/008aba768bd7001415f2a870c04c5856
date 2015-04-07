@@ -1,0 +1,67 @@
+package com.kb.logs;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import com.kb.config.ExplainConf;
+import com.kb.config.StaticConf;
+import com.kb.csql.ConnectSql;
+import com.kb.errors.Errors;
+import com.kb.read.ReadFile;
+
+public class CustomLog {
+	private String log;
+	private String rule;
+	private String table;
+	private Map<String, String> customConf = null;
+	
+	public CustomLog(String log, String rule, String table){
+		this.log = log;
+		this.rule = rule;
+		this.table = table;
+	}
+	private void loadCustomConf(){
+		ExplainConf ec = new ExplainConf();
+		ReadFile rf = new ReadFile();
+		String tmp = null;
+		try{
+			StringBuffer sb = new StringBuffer();
+			sb.append("./");
+			sb.append(StaticConf.conf.get("ruledir"));
+			sb.append(this.rule);
+			sb.append(".conf");
+			tmp = rf.readFile(sb.toString());
+		}catch(Exception e){
+			Errors.exit("自定义文件读取失败!");
+		}
+		this.customConf = ec.explain(tmp);
+	}
+	public void customReadLog(){
+		this.loadCustomConf();
+		String[] lines = this.log.split(this.customConf.get("symbolline"));
+		List<String> list = new ArrayList<String>();
+		Translate ts = new Translate();
+		
+		for(String i : lines){
+			if(i.length() <= 0){continue;}
+			Map<String, String> map = new HashMap<String, String>();
+			String[] field = i.split(this.customConf.get("symbolfield"));
+			for(String s : field){
+				if(s.length() <= 0){continue;}
+				String[] kv = s.split(this.customConf.get("symbolkv"));
+				if(kv[0] == "\r"){continue;}
+				if(kv.length == 1){
+					map.put(kv[0], "");
+				}else{
+					map.put(kv[0], kv[1]);
+				}
+			}
+			list = ts.tsSql(map, this.table, list);
+		}
+		System.out.println(list);
+		ConnectSql cs = new ConnectSql();
+		cs.connect(list);
+	}
+}

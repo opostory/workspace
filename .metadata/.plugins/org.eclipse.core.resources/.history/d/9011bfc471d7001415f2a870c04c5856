@@ -1,0 +1,16 @@
+package com.kb.csql;
+
+import com.kb.config.StaticConf;
+
+public class ConnectSql {
+	public void connect(){
+		String driver = "com.mysql.jdbc.Driver";
+		StringBuffer url = new StringBuffer();
+		url.append("jdbc:mysql://");
+		url.append(StaticConf.conf.get("mysqlhost"));
+		url.append(":");
+		url.append(StaticConf.conf.get("mysqlport"));
+		url.append("/");
+		url.append(StaticConf.conf.get("mysqldb"));
+	}
+}

@@ -1,0 +1,55 @@
+package com.kb.logs;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.kb.config.StaticConf;
+import com.kb.errors.Errors;
+import com.kb.read.ReadFile;
+
+public class ExplainLogDir {
+
+	private ReadFile rf = null;
+	
+	public void readEveryLogDir(){
+		String[] logs = StaticConf.conf.get("logdir").split(",");
+		String[] rule = StaticConf.conf.get("rule").split(",");
+		String[] table = StaticConf.conf.get("table").split(",");
+		if(logs.length == 1){
+			String log = single(logs[0]);
+			ExplainLog el = new ExplainLog();
+			el.readLog(log);
+		}else{
+			doubles(logs);
+		}
+	}
+	private String single(String logdir){
+		if(logdir.length() <= 0){
+			Errors.exit("找不到日志文件，程序已退出");
+		}
+		rf = new ReadFile();
+		String log = null;
+		try {
+			log = rf.readFile(logdir);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return log;
+	}
+	private List<String> doubles(String[] logdir){
+		List<String> list = new ArrayList();
+		rf = new ReadFile();
+		for(String i : logdir){
+			if(i.length() <= 0){
+				continue;
+			}
+			try {
+				list.add(rf.readFile(i));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return list;
+	}
+}

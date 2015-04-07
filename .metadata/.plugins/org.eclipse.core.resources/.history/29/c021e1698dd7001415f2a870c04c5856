@@ -1,0 +1,47 @@
+package com.kb.logs;
+
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+
+public class Translate {
+	/*
+	 * @map 日志文件分析后生成的map表
+	 * @table 日志对应的表
+	 * @list 回调list
+	 * return 将map转换成sql字符串
+	 */
+	public List<String> tsSql(Map<String, String> map, String table, List<String> list){
+		Iterator<Entry<String, String>> it = map.entrySet().iterator();
+		StringBuffer sb = new StringBuffer();
+		sb.append("insert into ");
+		sb.append(table);
+		sb.append(" (");
+		StringBuffer key = new StringBuffer();
+		StringBuffer value = new StringBuffer();
+		while(it.hasNext()){
+			Entry entry = it.next();
+			key.append(entry.getKey());
+			key.append(",");
+			value.append("\'");
+			value.append(entry.getValue());
+			value.append("\',");
+		}
+		String keys = key.toString();
+		String values = value.toString();
+		keys = keys.substring(0, keys.length()-1);
+		values = values.substring(0, values.length()-1);
+		sb.append(keys);
+		sb.append(") value (");
+		sb.append(values);
+		sb.append(");");
+		if(keys.length() <= 0 || values.length() <= 0){
+			
+			return list;
+		}
+		System.out.println(values);
+		list.add(sb.toString());
+		return list;
+	}
+}

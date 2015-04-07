@@ -1,0 +1,17 @@
+package com.kb.config;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class ExplainConf {
+	public static void explain(String conf){
+		 String[] line = conf.split("\n");
+		 System.out.println(line.length);
+		 Map<String, String> map = new HashMap<String, String>();
+		 for(String i : line){
+			 i.trim();
+			 String[] va = i.split("=");
+			 map.put(va[0], va[1]);
+		 }
+	}
+}

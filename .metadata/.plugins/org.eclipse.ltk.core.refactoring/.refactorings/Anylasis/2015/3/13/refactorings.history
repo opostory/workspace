@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;Anylasis/config/log.conf&apos; to &apos;anylasis.conf&apos;" description="Rename resource &apos;log.conf&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="config/log.conf" name="anylasis.conf" stamp="1427274991554" updateReferences="true"/>
+</session>

@@ -1,0 +1,14 @@
+import java.io.IOException;
+
+import com.kb.read.ReadFile;
+
+
+public class Anylasis {
+	
+	public static void main(String[] args) throws IOException{
+		ReadFile rf = null;
+		rf = new ReadFile();
+		//load config file
+		rf.readFile("./config/anylasis.conf");
+	}
+}

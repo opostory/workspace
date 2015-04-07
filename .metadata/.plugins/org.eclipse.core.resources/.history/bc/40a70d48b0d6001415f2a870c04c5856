@@ -1,0 +1,11 @@
+package com.kb.config;
+
+public class ExplainConf {
+	public static void explain(String conf){
+		 String[] line = conf.split("\r");
+		 System.out.println(line.length);
+		 for(String i : line){
+			 System.out.println(i);
+		 }
+	}
+}

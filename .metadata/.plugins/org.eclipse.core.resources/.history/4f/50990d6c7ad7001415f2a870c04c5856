@@ -1,0 +1,9 @@
+package com.kb.logs;
+
+import java.util.Map;
+
+public class Translate {
+	public void tsSql(Map<String, String> map, String table){
+		
+	}
+}

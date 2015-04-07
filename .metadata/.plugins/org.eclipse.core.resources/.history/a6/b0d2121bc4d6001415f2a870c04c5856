@@ -1,0 +1,8 @@
+#日志文件地址，多个地址用','号分割开
+#日志文件地址数量必须与规则对应
+logdir=C:/Apps/okay/temp/json
+#,C:/Apps/okay/hsl.ppk,
+rule=json,json
+#数据库账户密码
+mysqluser = root
+mysqlpwd = 

@@ -1,0 +1,23 @@
+package com.kb.read;
+
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+
+public class ReadFile {
+	public String readFile(String dir) throws IOException{
+		File file = new File(dir);
+		InputStream is = new BufferedInputStream(new FileInputStream(file));
+		int tmp = 0;
+		StringBuffer sb = new StringBuffer();
+		while((tmp = is.read())!=-1 ){
+			char t = (char)tmp;
+			sb.append(t);
+			System.out.print((char)tmp);
+		}
+		is.close();
+		return null;
+	}
+}

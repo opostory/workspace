@@ -1,0 +1,80 @@
+package com.kb.logs;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
+import net.sf.json.JSONObject;
+
+import com.kb.config.StaticConf;
+import com.kb.csql.ConnectSql;
+import com.kb.errors.Errors;
+import com.kb.read.ReadFile;
+
+public class ExplainLog {
+	
+	public String[] logs;
+	public String[] rule;
+	public String[] table;
+	private ReadFile rf = null;
+	
+	public ExplainLog(String[] logs, String[] rule, String[] table){
+		this.logs = logs;
+		this.rule = rule;
+		this.table = table;
+	}
+	public void readLog(){
+		int set = 0;
+		for(String i : logs){
+			if(i.length() <= 0){Errors.exit("日志路径错误！");}
+			String tmp = input(i);
+			if(tmp.length() <= 0){continue;}
+			this.readLog(tmp, this.rule[set], this.table[set]);
+			set++;
+		}
+	}
+	public void readLog(String log, String rule, String table){
+		if(rule.equals("json")){
+			this.toJson(log, table);
+		}else{
+			CustomLog cl = new CustomLog(log, rule, table);
+		}
+	}
+	private void toJson(String log, String table){
+		String[] logs = log.split(StaticConf.conf.get("symbolline"));
+		List<String> list = new ArrayList();
+		for(String i : logs){	
+			Map<String, String> map = null;
+			map = parseJson(i);
+			Translate tts = new Translate();
+			list = tts.tsSql(map, table, list);
+		}
+		ConnectSql cs = new ConnectSql();
+		cs.connect(list);
+	}
+	private Map<String, String> parseJson(String json){
+		JSONObject jo = JSONObject.fromObject(json);
+		Map<String, String> map = new HashMap<String, String>();
+		for(Iterator iter = jo.keys();iter.hasNext();){
+			String key = (String)iter.next();
+			map.put(key, jo.getString(key));
+		}
+		return map;
+	}
+	private String input(String logdir){
+		if(logdir.length() <= 0){
+			Errors.exit("找不到日志文件，程序已退出");
+		}
+		rf = new ReadFile();
+		String log = null;
+		try {
+			log = rf.readFile(logdir);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return log;
+	}
+}

@@ -1,0 +1,17 @@
+import java.io.IOException;
+import java.util.Map;
+
+import com.kb.config.ExplainConf;
+import com.kb.read.ReadFile;
+
+
+public class Anylasis {
+	public static Map<String, String> conf = null;
+	public static void main(String[] args) throws IOException{
+		ReadFile rf = null;
+		rf = new ReadFile();
+		//load config file
+		String conf = rf.readFile("./config/anylasis.conf");
+		conf = ExplainConf.explain(conf);
+	}
+}

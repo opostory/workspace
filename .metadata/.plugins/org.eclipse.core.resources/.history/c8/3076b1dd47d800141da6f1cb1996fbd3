@@ -1,0 +1,6 @@
+#行分隔符
+symbolline=$
+#字段分隔符
+symbolfield=,
+#键值分隔符
+symbolkv=eq
